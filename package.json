@@ -1,0 +1,22 @@
+{
+  "name": "mql-mysql",
+  "version": "0.1.0",
+  "description": "Build and run mysql queries",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orlleite/mql-mysql.git"
+  },
+  "author": "Orlando Leite <orlando@webdefault.com.br>",
+  "license": "GPLv2",
+  "bugs": {
+    "url": "https://github.com/orlleite/mql-mysql/issues"
+  },
+  "homepage": "https://github.com/orlleite/mql-mysql#readme",
+  "dependencies": {
+    "mysql2": "^1.6.1"
+  }
+}

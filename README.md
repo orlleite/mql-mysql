@@ -1,6 +1,11 @@
 # mql-mysql
 Build sql dynamically
 
+[![npm][npm]][npm-url]
+[![appveyor][appveyor]][appveyor-url]
+[![stability][stability]][stability-url]
+
+
 ## Install
 ```bash
 npm i --save mql-mysql
@@ -101,3 +106,15 @@ conn.update( 'table', [{balance:0}, {cost:["cost >= ?", 100]] );
 The `cost:` (the attribute's name) is ignored, only array part is used to build the query `["cost >= ?", 100]`.
 
 [SQLiteDatabase]: https://github.com/aosp-mirror/platform_frameworks_base/blob/master/core/java/android/database/sqlite/SQLiteDatabase.java
+
+[npm]: https://badge.fury.io/js/ext-mysql.svg
+[npm-url]: https://npmjs.com/package/ext-mysql
+
+[npm]: https://img.shields.io/npm/v/ext-mysql.svg
+[npm-url]: https://npmjs.com/package/ext-mysql
+
+[appveyor]: https://ci.appveyor.com/api/projects/status/hucvow1n0t3q3le3/branch/master?svg=true
+[appveyor-url]: https://ci.appveyor.com/project/adriancmiranda/ext-mysql/branch/master
+
+[stability]: http://badges.github.io/stability-badges/dist/experimental.svg
+[stability-url]: https://cdn.meme.am/cache/instances/folder481/500x/9689481.jpg

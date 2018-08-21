@@ -57,13 +57,13 @@ test('Create MQL Object', async function()
 		{ 
 			t1:
 			{ 
-				id:{ name:null, value:null, flag:MQL.GET },
+				id:{ name:"id", value:null, flag:MQL.GET },
 				name:{ name:"name", value:VALUE_1, flag:MQL.GET }
 			},
 			
 			t2:
 			{
-				id:{ name: null, value: null, flag:MQL.GET },
+				id:{ name: "id", value: null, flag:MQL.GET },
 				
 				t1_id:{ name: "t1_id", value: "t1.id", flag:MQL.JOIN },
 			   	value:{ name: "value", value: VALUE_2, flag:MQL.GET },
@@ -110,7 +110,7 @@ test( 'Insert', async () =>
 	mql.t1.setColumn( 'name', 'name', VALUE_1, MQL.SET );
 	mql.t2.setColumn( 'value', 'value', VALUE_2, MQL.SET );
 	
-	[results, ids] = await MQLtoMySQL.insert( mql, conn );
+	[ids, results] = await MQLtoMySQL.insert( mql, conn );
 	
 	var [rows, fields] = await conn.execute( "SELECT * FROM t1 WHERE id = ?", [ids["t1"]] );
 	expect( rows.length ).toBe(1);
@@ -127,7 +127,7 @@ test( 'Update', async () =>
 	mql.t1.setColumn( 'name', 'name', VALUE_3, MQL.SET );
 	mql.t2.setColumn( 'value', 'value', VALUE_4, MQL.SET );
 	
-	[updateResults, updateIds] = await MQLtoMySQL.update( mql, conn );
+	[updateIds, updateResults] = await MQLtoMySQL.update( mql, conn );
 	
 	[rows, fields] = await conn.execute( "SELECT * FROM t1 WHERE id = ?", [ids["t1"]] );
 	expect( rows.length ).toBe(1);

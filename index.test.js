@@ -8,7 +8,7 @@ test('Set environment', async () =>
 	process.env.ENCODE = "utf8";
 	process.env.MYSQL_HOSTNAME = "localhost";
 	process.env.MYSQL_USER = "root";
-	process.env.MYSQL_PASSWORD = "";
+	process.env.MYSQL_PASSWORD = "Password12!";
 	process.env.MYSQL_DATABASE = "test";
 
 	MySQL.CREATE_POOL();

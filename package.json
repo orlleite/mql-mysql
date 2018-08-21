@@ -4,19 +4,22 @@
   "description": "Build and run mysql queries",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/orlleite/mql-mysql.git"
+    "url": "git+https://github.com/webdefault/mql-mysql.git"
   },
   "author": "Orlando Leite <orlando@webdefault.com.br>",
-  "license": "GPLv2",
+  "license": "GPL-2.0",
   "bugs": {
     "url": "https://github.com/webdefault/mql-mysql/issues"
   },
   "homepage": "https://github.com/webdefault/mql-mysql#readme",
   "dependencies": {
-    "mysql2": "^1.6.1"
+    "ext-mysql": "^0.1.2"
+  },
+  "devDependencies": {
+    "jest": "^23.5.0"
   }
 }

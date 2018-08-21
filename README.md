@@ -126,11 +126,11 @@ var [ids, results] = MQLtoMySQL.update( mql );
 // TODO: More examples.
 
 
-[npm]: https://badge.fury.io/js/ext-mysql.svg
-[npm-url]: https://npmjs.com/package/ext-mysql
+[npm]: https://badge.fury.io/js/mql-mysql.svg
+[npm-url]: https://npmjs.com/package/mql-mysql
 
-[npm]: https://img.shields.io/npm/v/ext-mysql.svg
-[npm-url]: https://npmjs.com/package/ext-mysql
+[npm]: https://img.shields.io/npm/v/mql-mysql.svg
+[npm-url]: https://npmjs.com/package/mql-mysql
 
 [appveyor]: https://ci.appveyor.com/api/projects/status/h5icr44gfb0pd4sm/branch/master?svg=true
 [appveyor-url]: https://ci.appveyor.com/project/orlleite/mql-mysql/branch/master

@@ -49,9 +49,9 @@ await conn.init();
 const mql = new MQL();
 
 // Set a table called persons and add two columns, id and name.
-mql.setTable( 'persons' );
-mql.persons.setColumn( 'id' );
-mql.persons.setColumn( 'name' );
+mql.addTable( 'persons' );
+mql.persons.addColumn( 'id' );
+mql.persons.addColumn( 'name' );
 
 // Now you use this mql object to select from database.
 var [sql, binds] = await MQLtoMySQL.select( mql );
@@ -62,11 +62,11 @@ console.log( sql );
 var [rows, fields] = await MQLtoMySQL.select( mql );
 ```
 
-### MQL.setTable( key, name = key, primary = 'id' )
+### MQL.addTable( key, name = key, primary = 'id' )
 The key works as an alias, but if you don't provide a (table) name, it's going to be that too. Primary is the column name of the primary key of the table.
 
-### MQL.setColumn( table, key, name = key, value = null, flag = MQL.GET )
-The table is the alias you gave before (you have to set the table before the column), key works as an alias for the column, name of the column same rule of `setTable`. Value is used for set, where, join. And flag sets what you want to do about the column. You can access the table and set a column like `mmql.myTableAlias.setColumn( 'colName' )`.
+### MQL.addColumn( table, key, name = key, value = null, flag = MQL.GET )
+The table is the alias you gave before (you have to set the table before the column), key works as an alias for the column, name of the column same rule of `setTable`. Value is used for set, where, join. And flag sets what you want to do about the column. You can access the table and set a column like `mmql.myTableAlias.addColumn( 'colName' )`.
 
 ## Examples
 This mql below create a row for person table with name and age. After it gets the insert id, it will replace the `person.id` with the correct value and add the address.
@@ -75,15 +75,15 @@ mql = new MQL();
 
 const mql = new MQL();
 
-mql.setTable( 'person' );
-mql.person.setColumn( 'id' );
-mql.person.setColumn( 'name', 'name', "John", MQL.SET );
-mql.person.setColumn( 'age', 'age', 27, MQL.SET );
+mql.addTable( 'person' );
+mql.person.addColumn( 'id' );
+mql.person.addColumn( 'name', 'name', "John", MQL.SET );
+mql.person.addColumn( 'age', 'age', 27, MQL.SET );
 
-mql.setTable( 'address' );
-mql.address.setColumn( 'id' );
-mql.address.setColumn( 'person_id', 'person_id', 'person.id', MQL.JOIN );
-mql.address.setColumn( 'line1', 'line1', "Street Sol VI, 123", MQL.SET );
+mql.addTable( 'address' );
+mql.address.addColumn( 'id' );
+mql.address.addColumn( 'person_id', 'person_id', 'person.id', MQL.JOIN );
+mql.address.addColumn( 'line1', 'line1', "Street Sol VI, 123", MQL.SET );
 
 var [ids, results] = MQLtoMySQL.insert( mql );
 ```
@@ -95,15 +95,15 @@ mql = new MQL();
 
 const mql = new MQL();
 
-mql.setTable( 'person' );
-mql.person.setColumn( 'id', 'id', 15, MQL.EQUAL_TO );
-mql.person.setColumn( 'name', 'name', "John", MQL.SET );
-mql.person.setColumn( 'age', 'age', 27, MQL.SET );
+mql.addTable( 'person' );
+mql.person.addColumn( 'id', 'id', 15, MQL.EQUAL_TO );
+mql.person.addColumn( 'name', 'name', "John", MQL.SET );
+mql.person.addColumn( 'age', 'age', 27, MQL.SET );
 
-mql.setTable( 'address' );
-mql.address.setColumn( 'id' );
-mql.address.setColumn( 'person_id', 'person_id', 'person.id', MQL.JOIN );
-mql.address.setColumn( 'line1', 'line1', "Street Sol VI, 123", MQL.SET );
+mql.addTable( 'address' );
+mql.address.addColumn( 'id' );
+mql.address.addColumn( 'person_id', 'person_id', 'person.id', MQL.JOIN );
+mql.address.addColumn( 'line1', 'line1', "Street Sol VI, 123", MQL.SET );
 
 var [ids, results] = MQLtoMySQL.update( mql );
 ```
@@ -115,11 +115,11 @@ mql = new MQL();
 
 const mql = new MQL();
 
-mql.setTable( 'person' );
-mql.person.setColumn( 'id', 'id', 15, MQL.EQUAL_TO );
+mql.addTable( 'person' );
+mql.person.addColumn( 'id', 'id', 15, MQL.EQUAL_TO );
 
-mql.setTable( 'address' );
-mql.address.setColumn( 'person_id', 'person_id', 'person.id', MQL.JOIN );
+mql.addTable( 'address' );
+mql.address.addColumn( 'person_id', 'person_id', 'person.id', MQL.JOIN );
 
 var [ids, results] = MQLtoMySQL.update( mql );
 ```

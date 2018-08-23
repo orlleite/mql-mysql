@@ -43,15 +43,15 @@ test('Set environment', async () =>
 test('Create MQL Object', async function() 
 {
 	mql = new MQL();
-	mql.setTable( 't1' );
+	mql.addTable( 't1' );
 	
-	mql.t1.setColumn( 'id' );
-	mql.t1.setColumn( 'name', 'name', VALUE_1, MQL.GET );
+	mql.t1.addColumn( 'id' );
+	mql.t1.addColumn( 'name', 'name', VALUE_1, MQL.GET );
 	
-	mql.setTable( 't2' );
-	mql.t2.setColumn( 'id' );
-	mql.t2.setColumn( 't1_id', 't1_id', 't1.id', MQL.JOIN );
-	mql.t2.setColumn( 'value', 'value', VALUE_2, MQL.GET );
+	mql.addTable( 't2' );
+	mql.t2.addColumn( 'id' );
+	mql.t2.addColumn( 't1_id', 't1_id', 't1.id', MQL.JOIN );
+	mql.t2.addColumn( 'value', 'value', VALUE_2, MQL.GET );
 	
 	var col = mql.t1.column( 'name' );
 	expect( col ).toMatchObject( { name: 'name', value: 'My Name', flag: 1 } );
@@ -101,7 +101,7 @@ test('Create MQL Object', async function()
 });
 
 
-test('Selection', async () => 
+test('Selection 1: String and binds', async () => 
 {
 	var [sql, binds] = await MQLtoMySQL.select( mql );
 	expect( sql ).toBe( 
@@ -144,8 +144,8 @@ test('Selection', async () =>
 test( 'Insert', async () => 
 {
 	// Modify to set values
-	mql.t1.setColumn( 'name', 'name', VALUE_1, MQL.SET );
-	mql.t2.setColumn( 'value', 'value', VALUE_2, MQL.SET );
+	mql.t1.addColumn( 'name', 'name', VALUE_1, MQL.SET );
+	mql.t2.addColumn( 'value', 'value', VALUE_2, MQL.SET );
 	
 	[ids, results] = await MQLtoMySQL.insert( mql, conn );
 	
@@ -160,9 +160,9 @@ test( 'Insert', async () =>
 
 test( 'Update', async () => 
 {
-	mql.t1.setColumn( 'id', 'id', ids["t1"], MQL.EQUAL_TO );
-	mql.t1.setColumn( 'name', 'name', VALUE_3, MQL.SET );
-	mql.t2.setColumn( 'value', 'value', VALUE_4, MQL.SET );
+	mql.t1.addColumn( 'id', 'id', ids["t1"], MQL.EQUAL_TO );
+	mql.t1.addColumn( 'name', 'name', VALUE_3, MQL.SET );
+	mql.t2.addColumn( 'value', 'value', VALUE_4, MQL.SET );
 	
 	[updateIds, updateResults] = await MQLtoMySQL.update( mql, conn );
 	
@@ -174,6 +174,22 @@ test( 'Update', async () =>
 	expect( rows.length ).toBe(1);
 	expect( rows ).toEqual([{ id:ids["t2"], t1_id:ids["t1"], value:VALUE_4 }]);
 });
+
+test( 'Select 2: Real data', async () =>
+{
+	mql.removeGroupBy( 't1.id' );
+	mql.t1.removeColumn( 'id' );
+	
+	var [sql, binds] = await MQLtoMySQL.select( mql );
+	expect( sql ).toBe('SELECT ("New My Name") AS name, t2.id id, ("New Another val") AS value FROM t1 t1 JOIN t2 AS t2 ON t2.t1_id=t1.id ORDER BY t2.id DESC');
+	
+	mql.t1.addColumn( 'id', 'id', ids["t1"], MQL.EQUAL_TO );
+	mql.t1.addColumn( 'name', 'name', VALUE_3, MQL.GET );
+	mql.t2.addColumn( 'value', 'value', VALUE_4, MQL.GET );
+	
+	var [rows, fields] = await MQLtoMySQL.select( mql, conn );
+	expect( rows ).toMatchObject([{ name: 'New My Name', id: 1, value: 'New Another val' }]);
+})
 
 test( 'Delete', async () => 
 {
@@ -191,6 +207,12 @@ test('Drop table', async () =>
 {
 	result = await conn.execute( "DROP TABLE t1" );
 	result = await conn.execute( "DROP TABLE t2" );
+	
+	[rows, fields] = await conn.execute( "show tables like 't1'" );
+	expect(rows.length).toBe(0);
+	
+	[rows, fields] = await conn.execute( "show tables like 't2'" );
+	expect(rows.length).toBe(0);
 });
 
 test('Release connection', async () => 

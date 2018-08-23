@@ -103,10 +103,42 @@ test('Create MQL Object', async function()
 
 test('Selection', async () => 
 {
-	const [sql, binds] = await MQLtoMySQL.select( mql );
+	var [sql, binds] = await MQLtoMySQL.select( mql );
 	expect( sql ).toBe( 
 		"SELECT t1.id id, t1.name name, t2.id id, t2.value value FROM t1 t1 JOIN t2 AS t2 ON t2.t1_id=t1.id" );
 	expect( binds ).toEqual( [] );
+	
+	// ADD ORDER BY
+	mql.addOrderBy( 't1.id' );
+	mql.addOrderBy( 't2.id', "DESC" );
+	
+	[sql, binds] = await MQLtoMySQL.select( mql );
+	expect( sql ).toBe( 
+		"SELECT t1.id id, t1.name name, t2.id id, t2.value value FROM t1 t1 JOIN t2 AS t2 ON t2.t1_id=t1.id ORDER BY t1.id ASC, t2.id DESC" );
+	expect( binds ).toEqual( [] );
+	
+	// REMOVE ORDER BY
+	mql.removeOrderBy( 't1.id' );
+	
+	[sql, binds] = await MQLtoMySQL.select( mql );
+	expect( sql ).toBe( 
+		"SELECT t1.id id, t1.name name, t2.id id, t2.value value FROM t1 t1 JOIN t2 AS t2 ON t2.t1_id=t1.id ORDER BY t2.id DESC" );
+	expect( binds ).toEqual( [] );
+	
+	// ADD GROUP BY
+	mql.addGroupBy( 't1.id' );
+	
+	[sql, binds] = await MQLtoMySQL.select( mql );
+	expect( sql ).toBe( 
+		"SELECT t1.id id, t1.name name, t2.id id, t2.value value FROM t1 t1 JOIN t2 AS t2 ON t2.t1_id=t1.id GROUP BY t1.id ORDER BY t2.id DESC" );
+	expect( binds ).toEqual( [] );
+	
+	
+	// Get GROUP BY
+	expect( mql.groupBy() ).toEqual( ['t1.id'] );
+	
+	// Get ORDER BY
+	expect( mql.orderBy() ).toEqual( [['t2.id', 'DESC']] );
 });
 
 test( 'Insert', async () => 

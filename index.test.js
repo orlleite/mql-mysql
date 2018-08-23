@@ -8,7 +8,9 @@ test('Set environment', async () =>
 	process.env.ENCODE = "utf8";
 	process.env.MYSQL_HOSTNAME = "localhost";
 	process.env.MYSQL_USER = "root";
-	process.env.MYSQL_PASSWORD = "Password12!";
+	if( !process.env.MYSQL_PASSWORD == null ) 
+		process.env.MYSQL_PASSWORD = "Password12!";
+	
 	process.env.MYSQL_DATABASE = "test";
 
 	MySQL.CREATE_POOL();
@@ -50,6 +52,9 @@ test('Create MQL Object', async function()
 	mql.t2.setColumn( 'id' );
 	mql.t2.setColumn( 't1_id', 't1_id', 't1.id', MQL.JOIN );
 	mql.t2.setColumn( 'value', 'value', VALUE_2, MQL.GET );
+	
+	var col = mql.t1.column( 'name' );
+	expect( col ).toMatchObject( { name: 'name', value: 'My Name', flag: 1 } );
 	
 	const reference = 
 	{

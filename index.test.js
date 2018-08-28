@@ -100,7 +100,6 @@ test('Create MQL Object', async function()
 	expect( mql.clone() ).toMatchObject(reference);
 });
 
-
 test('Selection 1: String and binds', async () => 
 {
 	var [sql, binds] = await MQLtoMySQL.select( mql );

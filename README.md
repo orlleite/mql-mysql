@@ -2,6 +2,7 @@
 Build sql dynamically
 
 [![npm][npm]][npm-url]
+[![dependencies][dependencies]][dependencies-url]
 [![appveyor][appveyor]][appveyor-url]
 
 
@@ -131,6 +132,9 @@ var [ids, results] = MQLtoMySQL.update( mql );
 
 [npm]: https://img.shields.io/npm/v/mql-mysql.svg
 [npm-url]: https://npmjs.com/package/mql-mysql
+
+[dependencies]: https://david-dm.org/webdefault/mql-mysql.svg
+[dependencies-url]: https://david-dm.org/webdefault/mql-mysql
 
 [appveyor]: https://ci.appveyor.com/api/projects/status/h5icr44gfb0pd4sm/branch/master?svg=true
 [appveyor-url]: https://ci.appveyor.com/project/orlleite/mql-mysql/branch/master

@@ -1,5 +1,6 @@
 const MySQL = require('ext-mysql');
 const mqlMySQL = require('./');
+const util = require('util');
 const MQL = mqlMySQL.MQL;
 const MQLtoMySQL = mqlMySQL.MQLtoMySQL;
 
@@ -146,7 +147,7 @@ test('Insert', async() =>
     // Modify to set values
     mql.t1.addColumn('name', 'name', VALUE_1, MQL.SET);
     mql.t2.addColumn('value', 'value', VALUE_2, MQL.SET);
-
+    // console.log(util.inspect(mql, false, null, true));
     [ids, results] = await MQLtoMySQL.insert(mql, conn);
 
     var [rows, fields] = await conn.execute("SELECT * FROM t1 WHERE id = ?", [ids["t1"]]);

@@ -1,6 +1,6 @@
 {
   "name": "mql-mysql",
-  "version": "0.1.21",
+  "version": "1.0.21",
   "description": "Build and run mysql queries",
   "main": "index.js",
   "scripts": {
